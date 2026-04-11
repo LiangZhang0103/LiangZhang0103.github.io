@@ -9,7 +9,7 @@ theme = 'zhangliang-dev'
   description = 'PLM / CAD / MBD / 数字化转型。10年+ 一线实施经验，记录真实项目中的方法论与思考。'
   author = '张亮'
   github = 'https://github.com/zhangliang862093'
-  zhihu = 'https://www.zhihu.com/'
+  zhihu = ''
   email = 'zhangliang862093@163.com'
 
 [menus]
@@ -25,6 +25,10 @@ theme = 'zhangliang-dev'
     name = '关于'
     url = '/about/'
     weight = 3
+  [[menus.main]]
+    name = '标签'
+    url = '/tags/'
+    weight = 4
 
 [taxonomies]
   tag = 'tags'

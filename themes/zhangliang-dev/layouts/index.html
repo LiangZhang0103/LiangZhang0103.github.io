@@ -153,7 +153,7 @@
         <a href="/tags/{{ (index .Params.tags 0) | urlize }}/" class="article-badge">{{ with .Params.tags }}{{ index . 0 }}{{ end }}</a>
         <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
         <p>{{ .Summary }}</p>
-        <div class="article-meta">{{ .Date.Format "2006-01-02" }} · {{ .ReadingTime }} min</div>
+        <div class="article-meta">{{ .Date.Format "2006-01-02" }} · {{ .ReadingTime }} 分钟</div>
       </div>
     </div>
     {{ end }}
