@@ -1,0 +1,182 @@
+{{ define "main" }}
+<style>
+  /* Hero */
+  .hero {
+    max-width: var(--max-width); margin: 0 auto; padding: 120px 24px 80px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .hero h1 {
+    font-size: 48px; font-weight: 600; line-height: 1.00;
+    letter-spacing: -2.4px; margin-bottom: 24px;
+  }
+  .hero h1 .accent { color: var(--color-accent); }
+  .hero p {
+    font-size: 20px; font-weight: 400; line-height: 1.80;
+    color: var(--color-text-secondary); margin-bottom: 32px; max-width: 480px;
+  }
+  .hero-actions { display: flex; gap: 12px; }
+  .btn-dark {
+    background: var(--color-text); color: #fff; padding: 10px 24px;
+    border-radius: 6px; font-size: 14px; font-weight: 500; border: none; cursor: pointer;
+    display: inline-block;
+  }
+  .btn-dark:hover { opacity: 0.85; color: #fff; text-decoration: none; }
+  .btn-outline {
+    background: #fff; color: var(--color-text); padding: 10px 24px;
+    border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer;
+    display: inline-block; box-shadow: var(--shadow-ring);
+  }
+  .btn-outline:hover { background: var(--color-surface); text-decoration: none; }
+
+  /* Terminal card */
+  .terminal {
+    background: var(--color-text); color: #fafafa; border-radius: 12px;
+    padding: 24px; font-family: 'Geist Mono', monospace; font-size: 13px;
+    line-height: 2.00; box-shadow: rgba(0,0,0,0.25) 0px 30px 60px -20px;
+  }
+  .terminal-header { display: flex; gap: 6px; margin-bottom: 16px; }
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .terminal-dot.red { background: #ff5b4f; }
+  .terminal-dot.yellow { background: #eab308; }
+  .terminal-dot.green { background: #22c55e; }
+  .terminal .prompt { color: #22c55e; }
+  .terminal .cmd { color: #fafafa; }
+  .terminal .comment { color: #666; }
+
+  /* Section */
+  .section { max-width: var(--max-width); margin: 0 auto; padding: 80px 24px; }
+  .section-header { margin-bottom: 48px; }
+  .section-header h2 {
+    font-size: 32px; font-weight: 600; line-height: 1.25;
+    letter-spacing: -1.28px; margin-bottom: 12px;
+  }
+  .section-header p { font-size: 16px; color: var(--color-text-secondary); }
+  .section-divider { border: none; border-top: 1px solid #171717; margin: 0; }
+
+  /* Articles */
+  .articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .article-card {
+    background: #fff; border-radius: 8px; overflow: hidden;
+    box-shadow: var(--shadow-card); transition: all 0.2s;
+  }
+  .article-card:hover { transform: translateY(-2px); box-shadow: rgba(0,0,0,0.12) 0px 0px 0px 1px, rgba(0,0,0,0.06) 0px 8px 16px; }
+  .article-thumb {
+    height: 180px; background: #f5f5f5; display: flex; align-items: center;
+    justify-content: center; font-size: 40px; border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .article-body { padding: 20px; }
+  .article-badge {
+    display: inline-block; background: #ebf5ff; color: #0068d6;
+    padding: 0px 10px; border-radius: 9999px; font-size: 12px; font-weight: 500;
+    margin-bottom: 10px; font-family: 'Geist Mono', monospace;
+  }
+  .article-card h3 {
+    font-size: 18px; font-weight: 600; letter-spacing: -0.32px;
+    line-height: 1.33; margin-bottom: 8px;
+  }
+  .article-card h3 a { color: var(--color-text); }
+  .article-card h3 a:hover { color: var(--color-accent); text-decoration: none; }
+  .article-card p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.50; }
+  .article-meta { font-size: 12px; color: var(--color-text-muted); margin-top: 12px; font-family: 'Geist Mono', monospace; }
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; }
+  .about-text h2 { font-size: 32px; font-weight: 600; letter-spacing: -1.28px; margin-bottom: 16px; }
+  .about-text p { font-size: 16px; color: var(--color-text-secondary); line-height: 1.60; margin-bottom: 12px; }
+  .tech-list { display: flex; flex-direction: column; gap: 8px; }
+  .tech-item {
+    display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    background: #fff; border-radius: 6px; box-shadow: var(--shadow-ring);
+    font-size: 14px; font-weight: 500;
+  }
+  .tech-icon { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--color-accent); }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding: 60px 24px 40px; gap: 40px; }
+    .hero h1 { font-size: 32px; letter-spacing: -1.6px; }
+    .articles-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .section-header h2 { font-size: 24px; letter-spacing: -0.96px; }
+  }
+</style>
+
+<!-- Hero -->
+<section class="hero">
+  <div>
+    <h1>制造业<br><span class="accent">数字化</span><br>实践笔记</h1>
+    <p>{{ .Site.Params.description }}</p>
+    <div class="hero-actions">
+      <a href="/posts/" class="btn-dark">开始阅读</a>
+      <a href="{{ .Site.Params.github }}" class="btn-outline" target="_blank">GitHub →</a>
+    </div>
+  </div>
+  <div class="terminal">
+    <div class="terminal-header">
+      <span class="terminal-dot red"></span>
+      <span class="terminal-dot yellow"></span>
+      <span class="terminal-dot green"></span>
+    </div>
+    <div><span class="prompt">$</span> <span class="cmd">cat profile.yaml</span></div>
+    <div class="comment"># 10年+ 离散制造业信息化</div>
+    <div>name: <span style="color:#0072f5">{{ .Site.Params.author }}</span></div>
+    <div>role: PLM项目经理</div>
+    <div>location: 苏州</div>
+    <div>certs: [PMP]</div>
+    <div>stack:</div>
+    <div>&nbsp;&nbsp;- Dassault 3DE/ENOVIA</div>
+    <div>&nbsp;&nbsp;- CATIA / MBD</div>
+    <div>&nbsp;&nbsp;- Teamcenter</div>
+    <div>&nbsp;&nbsp;- Python / C / VB</div>
+    <div>&nbsp;&nbsp;- 新能源车企</div>
+    <div><span class="prompt">$</span> <span class="cmd">_</span></div>
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- Latest Posts -->
+<section class="section">
+  <div class="section-header">
+    <h2>最新文章</h2>
+    <p>实战经验 · 方法论 · 工具技巧</p>
+  </div>
+  <div class="articles-grid">
+    {{ $posts := first 6 (where .Site.RegularPages "Section" "posts") }}
+    {{ range $posts }}
+    <div class="article-card">
+      <a href="{{ .Permalink }}">
+        <div class="article-thumb">
+          {{ with .Params.emoji }}{{ . }}{{ else }}📝{{ end }}
+        </div>
+      </a>
+      <div class="article-body">
+        <span class="article-badge">{{ with .Params.tags }}{{ index . 0 }}{{ end }}</span>
+        <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+        <p>{{ .Summary }}</p>
+        <div class="article-meta">{{ .Date.Format "2006-01-02" }} · {{ .ReadingTime }} min</div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</section>
+
+<hr class="section-divider">
+
+<!-- About -->
+<section class="section">
+  <div class="about-grid">
+    <div class="about-text">
+      <h2>关于作者</h2>
+      <p>南京航空航天大学 · 飞行器制造工程。10年+ 离散制造业信息化经验，深度参与航空航天、汽车、轨道交通等行业 PLM 项目。</p>
+      <p>历任国睿信维实施顾问/高级顾问、复创大数据技术经理，现任能科科技资深售前顾问。持有 PMP 认证，擅长达索 3DE 全栈实施与数字化转型咨询。</p>
+    </div>
+    <div class="tech-list">
+      <div class="tech-item"><span class="tech-icon">&gt;_</span> 达索 3DE / ENOVIA</div>
+      <div class="tech-item"><span class="tech-icon">&gt;_</span> CATIA / MBD</div>
+      <div class="tech-item"><span class="tech-icon">&gt;_</span> Teamcenter</div>
+      <div class="tech-item"><span class="tech-icon">&gt;_</span> Python / C / VB</div>
+      <div class="tech-item"><span class="tech-icon">&gt;_</span> PMP 项目管理</div>
+    </div>
+  </div>
+</section>
+{{ end }}

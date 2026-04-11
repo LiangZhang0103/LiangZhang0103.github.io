@@ -1,0 +1,76 @@
+{{ define "main" }}
+<style>
+  .page { max-width: 720px; margin: 0 auto; padding: 64px 24px; }
+  .page-title {
+    font-size: 40px; font-weight: 600; line-height: 1.10;
+    letter-spacing: -1.5px; margin-bottom: 32px;
+  }
+  .page-divider { border: none; border-top: 1px solid #171717; margin: 0 0 48px; }
+  .page-body { font-size: 16px; line-height: 1.80; color: var(--color-text-secondary); }
+  .page-body h2 { font-size: 28px; font-weight: 600; color: var(--color-text); margin: 40px 0 16px; letter-spacing: -0.5px; }
+  .page-body h3 { font-size: 22px; font-weight: 600; color: var(--color-text); margin: 32px 0 12px; }
+  .page-body p { margin-bottom: 20px; }
+  .page-body ul { margin-bottom: 20px; padding-left: 24px; }
+  .page-body li { margin-bottom: 8px; }
+  .page-body a { color: var(--color-accent); }
+
+  /* About page specific */
+  .about-hero {
+    max-width: var(--max-width); margin: 0 auto; padding: 120px 24px 80px;
+    display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: center;
+  }
+  .about-hero h1 {
+    font-size: 48px; font-weight: 600; line-height: 1.10;
+    letter-spacing: -2.4px; margin-bottom: 24px;
+  }
+  .about-hero p {
+    font-size: 18px; color: var(--color-text-secondary); line-height: 1.70;
+    margin-bottom: 12px;
+  }
+  .tech-list { display: flex; flex-direction: column; gap: 8px; }
+  .tech-item {
+    display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+    background: #fff; border-radius: 6px; box-shadow: var(--shadow-ring);
+    font-size: 14px; font-weight: 500;
+  }
+  .tech-icon { font-family: 'Geist Mono', monospace; font-size: 12px; color: var(--color-accent); }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 48px 0; }
+  .stat-card {
+    text-align: center; padding: 24px; border: 1px solid var(--color-border); border-radius: 8px;
+  }
+  .stat-number { font-size: 36px; font-weight: 700; color: var(--color-accent); }
+  .stat-label { font-size: 13px; color: var(--color-text-muted); margin-top: 4px; }
+
+  @media (max-width: 768px) {
+    .about-hero { grid-template-columns: 1fr; padding: 60px 24px 40px; }
+    .about-hero h1 { font-size: 32px; letter-spacing: -1.6px; }
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<section class="about-hero">
+  <div>
+    <h1>{{ .Title }}</h1>
+    <div class="page-body">{{ .Content }}</div>
+  </div>
+  <div class="tech-list">
+    <div class="tech-item"><span class="tech-icon">&gt;_</span> 达索 3DE / ENOVIA</div>
+    <div class="tech-item"><span class="tech-icon">&gt;_</span> CATIA / MBD</div>
+    <div class="tech-item"><span class="tech-icon">&gt;_</span> Teamcenter</div>
+    <div class="tech-item"><span class="tech-icon">&gt;_</span> Python / C / VB</div>
+    <div class="tech-item"><span class="tech-icon">&gt;_</span> PMP 项目管理</div>
+    <div class="tech-item"><span class="tech-icon">&gt;_</span> 新能源车企</div>
+  </div>
+</section>
+
+<hr class="page-divider" style="max-width:var(--max-width);margin:0 auto;">
+
+<section style="max-width:var(--max-width);margin:0 auto;padding:48px 24px;">
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-number">10+</div><div class="stat-label">年行业经验</div></div>
+    <div class="stat-card"><div class="stat-number">20+</div><div class="stat-label">PLM 项目交付</div></div>
+    <div class="stat-card"><div class="stat-number">5</div><div class="stat-label">行业覆盖</div></div>
+    <div class="stat-card"><div class="stat-number">PMP</div><div class="stat-label">项目管理认证</div></div>
+  </div>
+</section>
+{{ end }}

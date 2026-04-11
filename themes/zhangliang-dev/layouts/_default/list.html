@@ -1,0 +1,41 @@
+{{ define "main" }}
+<style>
+  .page { max-width: 720px; margin: 0 auto; padding: 64px 24px; }
+  .page-title { font-size: 32px; font-weight: 600; letter-spacing: -1.28px; margin-bottom: 12px; }
+  .page-subtitle { font-size: 16px; color: var(--color-text-secondary); margin-bottom: 48px; }
+  .articles-list { display: flex; flex-direction: column; gap: 0; }
+  .article-row {
+    display: grid; grid-template-columns: 120px 1fr; gap: 32px;
+    padding: 24px 0; border-bottom: 1px solid var(--color-border);
+    align-items: start;
+  }
+  .article-date { font-size: 13px; color: var(--color-text-muted); font-family: 'Geist Mono', monospace; padding-top: 3px; }
+  .article-content h3 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .article-content h3 a { color: var(--color-text); }
+  .article-content h3 a:hover { color: var(--color-accent); text-decoration: none; }
+  .article-content p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.50; }
+  .article-tag-badge { background: #ebf5ff; color: #0068d6; padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: 500; font-family: 'Geist Mono', monospace; }
+  .article-tags { display: flex; gap: 8px; margin-top: 8px; }
+</style>
+
+<section class="page">
+  <h1 class="page-title">{{ .Title }}</h1>
+  <p class="page-subtitle">{{ .Description }}</p>
+  <div class="articles-list">
+    {{ range .Pages }}
+    <div class="article-row">
+      <div class="article-date">{{ .Date.Format "2006-01-02" }}</div>
+      <div class="article-content">
+        <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+        <p>{{ .Summary }}</p>
+        <div class="article-tags">
+          {{ range .Params.tags }}
+          <span class="article-tag-badge">{{ . }}</span>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

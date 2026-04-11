@@ -1,0 +1,37 @@
+baseURL = 'https://liangzhang0103.github.io/'
+languageCode = 'zh-CN'
+title = 'zhangliang.dev'
+theme = 'zhangliang-dev'
+[pagination]
+  pagerSize = 6
+
+[params]
+  description = 'PLM / CAD / MBD / 数字化转型。10年+ 一线实施经验，记录真实项目中的方法论与思考。'
+  author = '张亮'
+  github = 'https://github.com/zhangliang862093'
+  zhihu = 'https://www.zhihu.com/'
+  email = 'zhangliang862093@163.com'
+
+[menus]
+  [[menus.main]]
+    name = '首页'
+    url = '/'
+    weight = 1
+  [[menus.main]]
+    name = '文章'
+    url = '/posts/'
+    weight = 2
+  [[menus.main]]
+    name = '关于'
+    url = '/about/'
+    weight = 3
+
+disableKinds = ['taxonomy', 'term']
+
+[markup]
+  [markup.highlight]
+    style = 'dracula'
+    lineNos = true
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

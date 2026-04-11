@@ -1,0 +1,75 @@
+{{ define "main" }}
+<style>
+  .section { max-width: var(--max-width); margin: 0 auto; padding: 80px 24px; }
+  .section-header { margin-bottom: 48px; }
+  .section-header h2 {
+    font-size: 32px; font-weight: 600; line-height: 1.25;
+    letter-spacing: -1.28px; margin-bottom: 12px;
+  }
+  .section-header p { font-size: 16px; color: var(--color-text-secondary); }
+  .section-divider { border: none; border-top: 1px solid #171717; margin: 0; }
+  .articles-list { display: flex; flex-direction: column; gap: 0; }
+  .article-row {
+    display: grid; grid-template-columns: 120px 1fr; gap: 32px;
+    padding: 24px 0; border-bottom: 1px solid var(--color-border);
+    align-items: start; transition: background 0.15s;
+  }
+  .article-row:hover { background: var(--color-surface); }
+  .article-date {
+    font-size: 13px; color: var(--color-text-muted);
+    font-family: 'Geist Mono', monospace; padding-top: 3px;
+  }
+  .article-content h3 {
+    font-size: 18px; font-weight: 600; letter-spacing: -0.32px;
+    line-height: 1.33; margin-bottom: 4px;
+  }
+  .article-content h3 a { color: var(--color-text); }
+  .article-content h3 a:hover { color: var(--color-accent); text-decoration: none; }
+  .article-content p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.50; }
+  .article-tags { display: flex; gap: 8px; margin-top: 8px; }
+  .article-tag-badge {
+    background: #ebf5ff; color: #0068d6;
+    padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: 500;
+    font-family: 'Geist Mono', monospace;
+  }
+  .pagination {
+    display: flex; justify-content: center; gap: 16px; padding: 48px 0 0;
+  }
+  .pagination a, .pagination span {
+    font-size: 14px; font-family: 'Geist Mono', monospace;
+    padding: 8px 16px; border-radius: 6px;
+  }
+  .pagination a { box-shadow: var(--shadow-ring); color: var(--color-text); }
+  .pagination a:hover { background: var(--color-surface); text-decoration: none; }
+  .pagination .current { background: var(--color-text); color: #fff; }
+
+  @media (max-width: 768px) {
+    .article-row { grid-template-columns: 1fr; gap: 8px; }
+    .section-header h2 { font-size: 24px; }
+  }
+</style>
+
+<section class="section">
+  <div class="section-header">
+    <h2>所有文章</h2>
+    <p>实战经验 · 方法论 · 工具技巧</p>
+  </div>
+  <div class="articles-list">
+    {{ range .Pages }}
+    <div class="article-row">
+      <div class="article-date">{{ .Date.Format "2006-01-02" }}</div>
+      <div class="article-content">
+        <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+        <p>{{ .Summary }}</p>
+        <div class="article-tags">
+          {{ range .Params.tags }}
+          <span class="article-tag-badge">{{ . }}</span>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+  {{ template "_internal/pagination.html" . }}
+</section>
+{{ end }}
