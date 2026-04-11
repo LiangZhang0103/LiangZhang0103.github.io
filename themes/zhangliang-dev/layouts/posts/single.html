@@ -20,8 +20,9 @@
   .post-tag {
     background: #ebf5ff; color: #0068d6;
     padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 500;
-    font-family: 'Geist Mono', monospace;
+    font-family: 'Geist Mono', monospace; display: inline-block;
   }
+  .post-tag:hover { background: #d6edff; text-decoration: none; }
   .post-divider { border: none; border-top: 1px solid #171717; margin: 0 0 48px; }
   .post-body { font-size: 16px; line-height: 1.80; color: var(--color-text-secondary); }
   .post-body h1, .post-body h2, .post-body h3, .post-body h4 {
@@ -57,7 +58,7 @@
     <h1 class="post-title">{{ .Title }}</h1>
     <div class="post-tags">
       {{ range .Params.tags }}
-      <span class="post-tag">{{ . }}</span>
+      <a href="/tags/{{ . | urlize }}/" class="post-tag">{{ . }}</a>
       {{ end }}
     </div>
   </div>
@@ -65,5 +66,33 @@
   <div class="post-body">
     {{ .Content }}
   </div>
+
+  {{ $related := .Site.RegularPages.Related . | first 3 }}
+  {{ if $related }}
+  <style>
+    .related { margin-top: 64px; padding-top: 48px; border-top: 1px solid #171717; }
+    .related h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 24px; }
+    .related-list { display: flex; flex-direction: column; gap: 0; }
+    .related-item {
+      display: grid; grid-template-columns: 100px 1fr; gap: 24px;
+      padding: 16px 0; border-bottom: 1px solid var(--color-border); align-items: center;
+    }
+    .related-date { font-size: 12px; color: var(--color-text-muted); font-family: 'Geist Mono', monospace; }
+    .related-title { font-size: 15px; font-weight: 500; }
+    .related-title a { color: var(--color-text); }
+    .related-title a:hover { color: var(--color-accent); text-decoration: none; }
+  </style>
+  <div class="related">
+    <h2>相关文章</h2>
+    <div class="related-list">
+      {{ range $related }}
+      <div class="related-item">
+        <div class="related-date">{{ .Date.Format "2006-01-02" }}</div>
+        <div class="related-title"><a href="{{ .Permalink }}">{{ .Title }}</a></div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
 </article>
 {{ end }}

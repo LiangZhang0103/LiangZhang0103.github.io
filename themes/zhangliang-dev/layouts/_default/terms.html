@@ -1,0 +1,44 @@
+{{ define "main" }}
+<style>
+  .tags-page { max-width: 720px; margin: 0 auto; padding: 64px 24px; }
+  .tags-title {
+    font-size: 40px; font-weight: 600; line-height: 1.10;
+    letter-spacing: -1.5px; margin-bottom: 12px;
+  }
+  .tags-subtitle { font-size: 16px; color: var(--color-text-secondary); margin-bottom: 48px; }
+  .tags-divider { border: none; border-top: 1px solid #171717; margin: 0 0 48px; }
+  .tags-cloud { display: flex; flex-wrap: wrap; gap: 12px; }
+  .tag-pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #ebf5ff; color: #0068d6;
+    padding: 8px 16px; border-radius: 9999px;
+    font-size: 14px; font-weight: 500;
+    font-family: 'Geist Mono', monospace;
+    transition: all 0.15s;
+  }
+  .tag-pill:hover { background: #d6edff; text-decoration: none; color: #0068d6; transform: translateY(-1px); }
+  .tag-count {
+    background: rgba(0,114,245,0.15); color: #0068d6;
+    padding: 2px 8px; border-radius: 9999px; font-size: 11px;
+  }
+
+  @media (max-width: 768px) {
+    .tags-title { font-size: 28px; letter-spacing: -1px; }
+    .tags-page { padding: 40px 24px; }
+  }
+</style>
+
+<section class="tags-page">
+  <h1 class="tags-title">标签</h1>
+  <p class="tags-subtitle">按主题浏览所有文章</p>
+  <hr class="tags-divider">
+  <div class="tags-cloud">
+    {{ range .Data.Terms.Alphabetical }}
+    <a href="{{ .Page.Permalink }}" class="tag-pill">
+      {{ .Page.Title }}
+      <span class="tag-count">{{ len .Pages }}</span>
+    </a>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

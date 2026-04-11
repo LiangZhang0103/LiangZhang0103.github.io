@@ -1,0 +1,95 @@
+{{ define "main" }}
+<style>
+  .tag-page { max-width: 720px; margin: 0 auto; padding: 64px 24px; }
+  .tag-back {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--color-text-muted); font-family: 'Geist Mono', monospace;
+    margin-bottom: 32px;
+  }
+  .tag-back:hover { color: var(--color-accent); text-decoration: none; }
+  .tag-header { margin-bottom: 48px; }
+  .tag-name {
+    font-size: 40px; font-weight: 600; line-height: 1.10;
+    letter-spacing: -1.5px; margin-bottom: 12px;
+  }
+  .tag-meta {
+    font-size: 13px; color: var(--color-text-muted);
+    font-family: 'Geist Mono', monospace; display: flex; align-items: center; gap: 16px;
+  }
+  .tag-divider { border: none; border-top: 1px solid #171717; margin: 0 0 48px; }
+  .articles-list { display: flex; flex-direction: column; gap: 0; }
+  .article-row {
+    display: grid; grid-template-columns: 120px 1fr; gap: 32px;
+    padding: 24px 0; border-bottom: 1px solid var(--color-border);
+    align-items: start;
+  }
+  .article-date {
+    font-size: 13px; color: var(--color-text-muted);
+    font-family: 'Geist Mono', monospace; padding-top: 3px;
+  }
+  .article-content h3 {
+    font-size: 18px; font-weight: 600; letter-spacing: -0.32px;
+    line-height: 1.33; margin-bottom: 4px;
+  }
+  .article-content h3 a { color: var(--color-text); }
+  .article-content h3 a:hover { color: var(--color-accent); text-decoration: none; }
+  .article-content p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.50; }
+  .article-tags { display: flex; gap: 8px; margin-top: 8px; }
+  .article-tag-badge {
+    background: #ebf5ff; color: #0068d6;
+    padding: 2px 10px; border-radius: 9999px; font-size: 12px; font-weight: 500;
+    font-family: 'Geist Mono', monospace;
+  }
+  .rss-hint {
+    margin-top: 48px; padding: 16px 20px; background: var(--color-surface);
+    border-radius: 6px; font-size: 13px; color: var(--color-text-muted);
+    font-family: 'Geist Mono', monospace;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rss-hint a { color: var(--color-accent); font-weight: 500; }
+
+  @media (max-width: 768px) {
+    .tag-name { font-size: 28px; letter-spacing: -1px; }
+    .article-row { grid-template-columns: 1fr; gap: 8px; }
+    .tag-page { padding: 40px 24px; }
+  }
+</style>
+
+<section class="tag-page">
+  <a href="/tags/" class="tag-back">← 全部标签</a>
+  <div class="tag-header">
+    <h1 class="tag-name">#{{ .Title }}</h1>
+    <div class="tag-meta">
+      <span>{{ len .Pages }} 篇文章</span>
+      {{ with .OutputFormats.Get "RSS" }}
+      <a href="{{ .Permalink }}" style="color:var(--color-accent)">RSS</a>
+      {{ end }}
+    </div>
+  </div>
+  <hr class="tag-divider">
+
+  <div class="articles-list">
+    {{ range .Pages }}
+    <div class="article-row">
+      <div class="article-date">{{ .Date.Format "2006-01-02" }}</div>
+      <div class="article-content">
+        <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+        <p>{{ .Summary }}</p>
+        <div class="article-tags">
+          {{ range .Params.tags }}
+          <a href="/tags/{{ . | urlize }}/" class="article-tag-badge">{{ . }}</a>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+
+  {{ with .OutputFormats.Get "RSS" }}
+  <div class="rss-hint">
+    <span>&gt;_</span>
+    订阅此标签：<a href="{{ .Permalink }}">{{ $.Title }} RSS Feed</a>
+  </div>
+  {{ end }}
+</section>
+{{ end }}

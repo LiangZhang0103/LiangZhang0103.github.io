@@ -26,7 +26,19 @@ theme = 'zhangliang-dev'
     url = '/about/'
     weight = 3
 
-disableKinds = ['taxonomy', 'term']
+[taxonomies]
+  tag = 'tags'
+
+[related]
+  threshold = 0
+  includeNewer = true
+  toLower = false
+  [[related.indices]]
+    name = 'tags'
+    weight = 80
+  [[related.indices]]
+    name = 'date'
+    weight = 10
 
 [markup]
   [markup.highlight]
