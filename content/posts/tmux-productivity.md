@@ -3,7 +3,7 @@ title: "tmux 实战指南：从入门到高效编程"
 date: 2025-04-11
 emoji: "🖥️"
 tags: ["终端", "tmux", "效率工具", "开发环境"]
-draft: true
+draft: false
 summary: "系统掌握 tmux 终端复用工具，从核心概念到进阶配置，构建永不丢失的开发环境。"
 ---
 
